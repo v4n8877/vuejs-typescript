@@ -1,0 +1,52 @@
+.container-fluid {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  .dashboard {
+    display: flex;
+    &__menu {
+      flex: 20%;
+      background: #0e1a35;
+      &__logo {
+        display: flex;
+        justify-content: center;
+        margin: 10px 0;
+        img {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+        }
+      }
+      &__navi{
+        &_list {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          height: 100%;
+          overflow: auto;
+          &-items {
+            &__link {
+              display: block;
+              color: #000;
+              padding: 8px 16px;
+              text-decoration: none;
+              color: white;
+              &:hover:not(.-active) {
+                background-color: #555;
+                color: white;
+              }
+            }
+            &__active {
+              background-color: #4CAF50;
+              color: white;
+            }
+          }
+        } 
+      }
+    }
+    &__content{
+      flex: 80%;
+      padding: 10px;
+    }
+  }
+}
