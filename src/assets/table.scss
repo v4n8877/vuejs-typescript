@@ -18,6 +18,19 @@ table {
         margin-right: 10px;
         vertical-align: middle;
       }
+      .icon-group {
+        width: 20px;
+        height: 20px;
+        margin: 0 5px;
+        vertical-align: sub;
+        cursor: pointer;
+        &:hover {
+          filter: invert(49%) sepia(12%) saturate(1841%) hue-rotate(62deg) brightness(94%) contrast(96%);
+          &:first-child {
+            filter: invert(16%) sepia(89%) saturate(2931%) hue-rotate(355deg) brightness(117%) contrast(81%);
+          }
+        }
+      }
     }
   }
 }

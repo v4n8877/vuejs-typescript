@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { UserSubmit, UserResponse, ListItem } from './models';
+import { UserSubmit, UserResponse, ListItem, Item } from './models';
 
 const getToken = localStorage.getItem('USER_TOKEN');
 
@@ -26,11 +26,16 @@ export async function loginUser(user: UserSubmit): Promise<UserResponse | undefi
 
 export async function getListItem(): Promise<ListItem | undefined> {
   try {
-    const response = await callApi.get('/v1/manager/products', {
-      "headers": {
-        "Authorization": getToken,
-      },
-    })
+    const response = await callApi.get('/v1/manager/products')
+    return (response.data as ListItem);
+  } catch (e) {
+    return e;
+  }
+}
+
+export async function updateItem(item: Item): Promise<ListItem | undefined> {
+  try {
+    const response = await callApi.put(`/v1/manager/products/${item.id}`, item)
     return (response.data as ListItem);
   } catch (e) {
     return e;

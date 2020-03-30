@@ -1,0 +1,38 @@
+.container-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  h3 {
+    margin: 0;
+  }
+  .modal_content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 80px;
+      height: 60px;
+    }
+    .group-item {
+      display: flex;
+      flex-direction: column;
+      margin-left: 10px;
+      input {
+        height: 30px;
+      }
+    }
+  }
+  
+  .group-btn {
+    button {
+      width: 150px;
+      height: 30px;
+      &:first-child {
+        margin-right: 20px;
+      }
+    }
+  }
+}

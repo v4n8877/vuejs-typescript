@@ -1,5 +1,16 @@
-<template slot='listData' slot-scope='props'>
+<template slot-scope='props'>
   <div>
+    <Modal 
+      v-show='showModal'
+      @close='controlHideModal()'
+    >
+      <FormItem
+        slot='content'
+        :choiceParentItem='choiceItem'
+        @modalClose='controlHideModal()'
+        @editItem='editItem()'
+      />
+    </Modal>
     <table>
       <tr>
         <th>ID</th>
@@ -18,8 +29,8 @@
         <td>{{ item.created_at }}</td>
         <td>
           {{ item.updated_at }}
-          <i class="fas fa-edit"></i>
-          <i class="far fa-trash-alt"></i>
+          <img class="icon-group" alt src="@/assets/edit.svg" @click="controlShowModal(item)"/>
+          <img class="icon-group" alt src="@/assets/delete.svg" />
         </td>
       </tr>
     </table>
@@ -30,18 +41,39 @@
 // @ is an alias to /src
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState, mapActions } from 'vuex';
+import Modal from '@/components/Modal.vue';
+import FormItem from '@/components/FormItem.vue';
 
 @Component({
-  name: '',
+  components: {
+    Modal,
+    FormItem
+  },
   computed: {
     ...mapState(['listItem']),
   },
   methods: {
-   ...mapActions(['getListItem']),
+   ...mapActions(['getListItem', 'updateItem']),
   },
 })
 export default class ListItem extends Vue {
   listData = [];
+  showModal = false;
+  choiceItem = {};
+
+  controlShowModal(item) {
+    this.showModal = true;
+    this.choiceItem = {...item};
+  }
+
+   controlHideModal() {
+    this.showModal = false;
+  }
+
+  editItem() {
+    this.$store.dispatch('updateItem', this.choiceItem);
+    this.showModal = false;
+  }
 
   get dataList() {
     this.listData = this.$store.state.listItem.listItem;
