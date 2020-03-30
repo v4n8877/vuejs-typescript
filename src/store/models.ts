@@ -13,6 +13,7 @@ export interface User {
 export interface Meta {
   message: string;
   status: boolean;
+  type: string;
 }
 
 export interface UserSubmit {

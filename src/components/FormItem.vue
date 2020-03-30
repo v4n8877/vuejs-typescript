@@ -1,4 +1,4 @@
-<template slot-scope='props'>
+<template>
   <div class="container-form">
     <h3 slot="header">Modify item</h3>
     <div class="modal_content">
@@ -20,22 +20,13 @@
   </div>
 </template>
 
-<script>
+<script lang='ts'>
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
   props: ['choiceParentItem']
 })
-export default class FormItem extends Vue {
-
-  // edit() {
-  //   this.$emit('edit');
-  // }
-
-  // modal() {
-  //   this.$emit('modal');
-  // }
-}
+export default class FormItem extends Vue {}
 </script>
 
 <style lang="scss">

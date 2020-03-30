@@ -5,10 +5,18 @@
       @close='controlHideModal()'
     >
       <FormItem
+        v-if="nameModal === 'edit'"
         slot='content'
         :choiceParentItem='choiceItem'
         @modalClose='controlHideModal()'
         @editItem='editItem()'
+      />
+
+      <Confirmation 
+        v-if="nameModal === 'delete'"
+        slot='content'
+        @modalClose='controlHideModal()'
+        @deleteItem='deleteItem()'
       />
     </Modal>
     <table>
@@ -29,41 +37,57 @@
         <td>{{ item.created_at }}</td>
         <td>
           {{ item.updated_at }}
-          <img class="icon-group" alt src="@/assets/edit.svg" @click="controlShowModal(item)"/>
-          <img class="icon-group" alt src="@/assets/delete.svg" />
+          <img class="icon-group" alt src="@/assets/edit.svg" @click="controlShowModal('edit', item)"/>
+          <img class="icon-group" alt src="@/assets/delete.svg" @click="controlShowModal('delete', item)"/>
+          <img class="icon-group" alt src="@/assets/add.svg" />
         </td>
       </tr>
     </table>
+    <Notifications 
+      :meta='getNotifications'
+    />
   </div>
 </template>
 
-<script>
+<script lang='ts'>
 // @ is an alias to /src
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState, mapActions } from 'vuex';
 import Modal from '@/components/Modal.vue';
 import FormItem from '@/components/FormItem.vue';
+import Confirmation from '@/components/Confirmation.vue';
+import Notifications from '@/components/Notifications.vue';
+import { Item } from '@/store/models';
 
 @Component({
   components: {
     Modal,
-    FormItem
+    FormItem,
+    Confirmation,
+    Notifications,
   },
   computed: {
-    ...mapState(['listItem']),
+    ...mapState(['listItem', 'meta']),
   },
   methods: {
-   ...mapActions(['getListItem', 'updateItem']),
+   ...mapActions(['getListItem', 'updateItem', 'deleteItemList']),
   },
 })
 export default class ListItem extends Vue {
   listData = [];
   showModal = false;
   choiceItem = {};
+  nameModal = '';
 
-  controlShowModal(item) {
+  controlShowModal(name: string, item: Item) {
+    if (name === 'edit') {
+      this.nameModal = name;
+      this.choiceItem = {...item};
+    } else {
+      this.nameModal = name;
+      this.choiceItem = {...item};
+    }
     this.showModal = true;
-    this.choiceItem = {...item};
   }
 
    controlHideModal() {
@@ -75,9 +99,18 @@ export default class ListItem extends Vue {
     this.showModal = false;
   }
 
+  deleteItem() {
+    this.$store.dispatch('deleteItemList', this.choiceItem);
+    this.showModal = false;
+  }
+
   get dataList() {
     this.listData = this.$store.state.listItem.listItem;
     return this.listData;
+  }
+
+  get getNotifications() {
+    return this.$store.state.listItem.meta;
   }
 
   mounted() {
