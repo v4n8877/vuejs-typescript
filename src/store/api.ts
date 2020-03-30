@@ -33,9 +33,13 @@ export async function getListItem(): Promise<ListItem | undefined> {
   }
 }
 
-export async function updateItem(item: Item): Promise<ListItem | undefined> {
+export async function updateItem(item: any): Promise<ListItem | undefined> {
   try {
-    const response = await callApi.put(`/v1/manager/products/${item.id}`, item)
+    const response = await callApi.put(`/v1/manager/products`, item, {
+      "headers":{
+        'Content-Type':'multipart/form-data',
+      }
+    })
     return (response.data as ListItem);
   } catch (e) {
     return e;
@@ -45,6 +49,15 @@ export async function updateItem(item: Item): Promise<ListItem | undefined> {
 export async function deletItem(item: Item): Promise<ListItem | undefined> {
   try {
     const response = await callApi.delete(`/v1/manager/products/${item.id}`)
+    return (response.data as ListItem);
+  } catch (e) {
+    return e;
+  }
+}
+
+export async function addItem(item: Item): Promise<ListItem | undefined> {
+  try {
+    const response = await callApi.post(`/v1/manager/products`, item)
     return (response.data as ListItem);
   } catch (e) {
     return e;

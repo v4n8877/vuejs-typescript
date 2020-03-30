@@ -11,10 +11,22 @@
   .modal_content {
     display: flex;
     justify-content: center;
-    align-items: center;
-    img {
-      width: 80px;
-      height: 60px;
+    .group-img {
+      display: flex;
+      flex-direction: column;
+      img {
+        width: 80px;
+        height: 60px;
+      }
+      input {
+        display: none;
+      }
+      label {
+        font-size: 12px;
+        text-align: center;
+        margin-top: 10px;
+        cursor: pointer;
+      }
     }
     .group-item {
       display: flex;

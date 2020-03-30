@@ -33,6 +33,7 @@ export interface Item {
   price: number;
   updated_at: string;
   avatar: string;
+  link: string;
 }
 
 export interface ListItem {

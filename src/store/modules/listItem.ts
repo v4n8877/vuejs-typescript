@@ -15,8 +15,14 @@ export const actions = {
     }
   },
 
-  async updateItem(store: any, item: Item) {
-    const data = await updateItem(item);
+  async updateItem(store: any, item: Item) { 
+    console.log('df ',item)
+    let formData = new FormData();
+    for (let key in item) {
+      formData.append(key, item[key]);
+      return formData;
+    };
+    const data = await updateItem(formData);
     if (data?.meta?.status) {
       store.commit('updateListItem', data);
       return data;

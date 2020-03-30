@@ -10,6 +10,7 @@
         :choiceParentItem='choiceItem'
         @modalClose='controlHideModal()'
         @editItem='editItem()'
+        @changeFile='getFiles'
       />
 
       <Confirmation 
@@ -44,7 +45,7 @@
       </tr>
     </table>
     <Notifications 
-      :meta='getNotifications'
+      :meta='meta'
     />
   </div>
 </template>
@@ -82,7 +83,8 @@ export default class ListItem extends Vue {
   controlShowModal(name: string, item: Item) {
     if (name === 'edit') {
       this.nameModal = name;
-      this.choiceItem = {...item};
+      this.choiceItem = {...item, link: item.avatar};
+      
     } else {
       this.nameModal = name;
       this.choiceItem = {...item};
@@ -95,6 +97,7 @@ export default class ListItem extends Vue {
   }
 
   editItem() {
+    delete this.choiceItem.link;
     this.$store.dispatch('updateItem', this.choiceItem);
     this.showModal = false;
   }
@@ -113,6 +116,12 @@ export default class ListItem extends Vue {
     return this.$store.state.listItem.meta;
   }
 
+  getFiles(value: any) {
+    const filesImage = {file: value, url: URL.createObjectURL(value[0])};
+     this.choiceItem = {...this.choiceItem, link: filesImage.url, avatar: filesImage.file};
+     return this.choiceItem
+  }
+  
   mounted() {
     this.$store.dispatch('getListItem');
   }
