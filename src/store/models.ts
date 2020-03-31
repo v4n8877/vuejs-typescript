@@ -34,10 +34,12 @@ export interface Item {
   updated_at: string;
   avatar: string;
   link: string;
+  lenght: string;
 }
 
 export interface ListItem {
   listItem?: (Item)[] | null;
   meta?: Meta;
+  
 }
 

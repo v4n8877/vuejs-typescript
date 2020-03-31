@@ -31,7 +31,7 @@
       <tr v-for="item in dataList" :key="item.id">
         <td>{{ item.id }}</td>
         <td>
-          <img alt :src="item.avatar">
+          <img alt :src="item.avatar || item.link">
           {{ item.name }}
         </td>
         <td>{{ item.price }}</td>
@@ -97,7 +97,7 @@ export default class ListItem extends Vue {
   }
 
   editItem() {
-    delete this.choiceItem.link;
+    // delete this.choiceItem.link;
     this.$store.dispatch('updateItem', this.choiceItem);
     this.showModal = false;
   }
@@ -109,6 +109,7 @@ export default class ListItem extends Vue {
 
   get dataList() {
     this.listData = this.$store.state.listItem.listItem;
+    console.log('new: ', this.listData)
     return this.listData;
   }
 
@@ -118,7 +119,7 @@ export default class ListItem extends Vue {
 
   getFiles(value: any) {
     const filesImage = {file: value, url: URL.createObjectURL(value[0])};
-     this.choiceItem = {...this.choiceItem, link: filesImage.url, avatar: filesImage.file};
+     this.choiceItem = {...this.choiceItem, link: filesImage.url, avatar: filesImage.file[0]};
      return this.choiceItem
   }
   

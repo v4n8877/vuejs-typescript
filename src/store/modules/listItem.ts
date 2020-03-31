@@ -15,14 +15,8 @@ export const actions = {
     }
   },
 
-  async updateItem(store: any, item: Item) { 
-    console.log('df ',item)
-    let formData = new FormData();
-    for (let key in item) {
-      formData.append(key, item[key]);
-      return formData;
-    };
-    const data = await updateItem(formData);
+  async updateItem(store: any, item: Item) {
+    const data = await updateItem(item);
     if (data?.meta?.status) {
       store.commit('updateListItem', data);
       return data;
@@ -49,6 +43,7 @@ export const mutations = {
       if(newItem.id === getData.id) {
         newItem.name = getData.name;
         newItem.price = getData.price;
+        newItem.link = getData.avatar
       }
       return newItem;
     });

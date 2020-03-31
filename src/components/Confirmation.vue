@@ -13,7 +13,7 @@ import { Component, Vue } from 'vue-property-decorator';
 export default class Confirmation extends Vue {}
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
   .confirmation {
     display: flex;
     flex-direction: column;

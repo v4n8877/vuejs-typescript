@@ -35,7 +35,6 @@ export default class FormItem extends Vue {
     const files = $event.target.files || $event.dataTransfer.files;
     this.$emit('changeFile', files)
   }
-
 }
 </script>
 
