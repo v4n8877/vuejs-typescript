@@ -38,8 +38,7 @@ export interface Item {
 }
 
 export interface ListItem {
-  listItem?: (Item)[] | null;
+  data?: (Item)[] | null;
   meta?: Meta;
-  
 }
 

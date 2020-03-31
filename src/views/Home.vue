@@ -16,6 +16,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import ListItem from '@/views/ListItem';
 import Menu from '@/components/Menu';
 
+
 @Component({
   components: {
     Menu,
@@ -26,5 +27,5 @@ export default class Home extends Vue {}
 </script>
 
 <style lang="scss">
-  @import '@/assets/home.scss'
+  @import '@/assets/home.scss';
 </style>

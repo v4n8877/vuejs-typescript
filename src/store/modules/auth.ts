@@ -1,42 +1,46 @@
-import { Module } from 'vuex';
-import { UserResponse, UserSubmit, User } from '@/store/models';
+import { VuexModule, Module, getModule, Mutation, Action } from 'vuex-module-decorators';
+import { UserResponse, UserSubmit } from '@/store/models';
 import { loginUser, clearJWT } from '../api';
 import router from '@/router';
+import store from '@/store';
 
-export const state: UserResponse = {
-  data: undefined,
-  meta: undefined,
-};
+@Module({
+  namespaced: true,
+  name: 'auth',
+  store,
+  dynamic: true,
+})
 
-export const actions = {
-  async login(store: any, userSubmit: UserSubmit) {
+class AuthModule extends VuexModule {
+  data: UserResponse['data'] | null = null;
+  meta: UserResponse['meta'] | null = null;
+
+  @Action({commit: 'setToke'})
+  async login(userSubmit: UserSubmit) {
     const data = await loginUser(userSubmit);
     if (data?.meta && data.meta.status) {
-      store.commit('setToke', data.data);
-      router.push('/home');
       return data.data;
     }
-  },
-  logout(store: any) {
+  }
+
+  @Mutation
+  setToke(data: UserResponse['data']) {
+    // @ts-ignore
+    localStorage.setItem('USER_TOKEN', JSON.stringify(data.token));
+    router.push('/home');
+    this.data = data;
+  }
+
+  @Action({commit: 'removeAuth'})
+  logout() {
     clearJWT();
     localStorage.removeItem('USER_TOKEN');
-    store.commit('logout');
-  },
-};
+  }
 
-export const mutations = {
-  setToke(state: any, data: any) {
-    localStorage.setItem('USER_TOKEN', JSON.stringify(data.token));
-    return state.data = data;
-  },
-  logout(state: any) {
-    return state.data = {};
-  },
-};
+  @Mutation
+  removeAuth() {
+    this.data = null;
+  }
+}
 
-export default {
-  namespace: true,
-  state,
-  mutations,
-  actions,
-};
+export default getModule(AuthModule);

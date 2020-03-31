@@ -1,6 +1,6 @@
 <template slot-scope='props'>
   <div>
-    <Modal 
+    <Modal
       v-show='showModal'
       @close='controlHideModal()'
     >
@@ -13,7 +13,7 @@
         @changeFile='getFiles'
       />
 
-      <Confirmation 
+      <Confirmation
         v-if="nameModal === 'delete'"
         slot='content'
         @modalClose='controlHideModal()'
@@ -44,7 +44,7 @@
         </td>
       </tr>
     </table>
-    <Notifications 
+    <Notifications
       :meta='meta'
     />
   </div>
@@ -59,6 +59,7 @@ import FormItem from '@/components/FormItem.vue';
 import Confirmation from '@/components/Confirmation.vue';
 import Notifications from '@/components/Notifications.vue';
 import { Item } from '@/store/models';
+import listItem from '@/store/modules/listItem';
 
 @Component({
   components: {
@@ -67,12 +68,12 @@ import { Item } from '@/store/models';
     Confirmation,
     Notifications,
   },
-  computed: {
-    ...mapState(['listItem', 'meta']),
-  },
-  methods: {
-   ...mapActions(['getListItem', 'updateItem', 'deleteItemList']),
-  },
+  // computed: {
+  //   ...mapState(['listItem', 'meta']),
+  // },
+  // methods: {
+  //  ...mapActions(['getListItem', 'updateItem', 'deleteItemList']),
+  // },
 })
 export default class ListItem extends Vue {
   listData = [];
@@ -84,7 +85,7 @@ export default class ListItem extends Vue {
     if (name === 'edit') {
       this.nameModal = name;
       this.choiceItem = {...item, link: item.avatar};
-      
+
     } else {
       this.nameModal = name;
       this.choiceItem = {...item};
@@ -109,7 +110,6 @@ export default class ListItem extends Vue {
 
   get dataList() {
     this.listData = this.$store.state.listItem.listItem;
-    console.log('new: ', this.listData)
     return this.listData;
   }
 
@@ -122,9 +122,9 @@ export default class ListItem extends Vue {
      this.choiceItem = {...this.choiceItem, link: filesImage.url, avatar: filesImage.file[0]};
      return this.choiceItem
   }
-  
+
   mounted() {
-    this.$store.dispatch('getListItem');
+    listItem.getListItem();
   }
 }
 </script>

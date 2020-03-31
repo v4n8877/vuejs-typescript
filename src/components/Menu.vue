@@ -15,16 +15,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { mapActions } from 'vuex';
+import auth from '@/store/modules/auth';
 
-@Component({
-  methods: {
-   ...mapActions(['logout']),
-  },
-})
+@Component
 export default class Menu extends Vue {
   logoutAuth() {
-    this.$store.dispatch('logout');
+    auth.logout();
   }
 }
 </script>
