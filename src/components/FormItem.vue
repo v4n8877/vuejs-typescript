@@ -28,12 +28,12 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
-  props: ['choiceParentItem']
+  props: ['choiceParentItem'],
 })
 export default class FormItem extends Vue {
-  onFileChange($event: any){
+  onFileChange($event: any) {
     const files = $event.target.files || $event.dataTransfer.files;
-    this.$emit('changeFile', files)
+    this.$emit('changeFile', files);
   }
 }
 </script>

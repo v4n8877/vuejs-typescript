@@ -34,7 +34,8 @@ export interface Item {
   updated_at: string;
   avatar: string;
   link: string;
-  lenght: string;
+  length: string;
+  [key: string]: any;
 }
 
 export interface ListItem {

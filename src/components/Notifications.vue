@@ -1,7 +1,7 @@
 <template>
     <div class="alert alert-danger" v-if="meta && Object.keys(meta).length">
         <ul>
-            <li v-if="message in meta">{{ meta.message }}</li>
+            <li>{{meta && meta.message }}</li>
         </ul>
     </div>
 </template>
@@ -10,7 +10,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
-  props: ['meta']
+  props: ['meta'],
 })
 export default class Notifications extends Vue {}
 </script>

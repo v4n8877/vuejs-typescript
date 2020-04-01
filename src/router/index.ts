@@ -34,20 +34,20 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const authToken = localStorage.getItem('USER_TOKEN');
 
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!authToken) {
       next({
         path: '/',
-        params: {nextUrl: to.fullPath}
+        params: {nextUrl: to.fullPath},
       });
     } else {
       next();
     }
-  } else if(to.matched.some(record => !record.meta.requiresAuth)) {
+  } else if (to.matched.some((record) => !record.meta.requiresAuth)) {
     if (authToken) {
       next({
         path: '/home',
-        params: {nextUrl: to.fullPath}
+        params: {nextUrl: to.fullPath},
       });
     } else {
       next();

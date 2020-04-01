@@ -31,7 +31,7 @@
       <tr v-for="item in dataList" :key="item.id">
         <td>{{ item.id }}</td>
         <td>
-          <img alt :src="item.avatar || item.link">
+          <img alt :src="item && item.link? item.link : item.avatar">
           {{ item.name }}
         </td>
         <td>{{ item.price }}</td>
@@ -45,7 +45,7 @@
       </tr>
     </table>
     <Notifications
-      :meta='meta'
+      :meta='getNotifications'
     />
   </div>
 </template>
@@ -53,7 +53,6 @@
 <script lang='ts'>
 // @ is an alias to /src
 import { Component, Vue } from 'vue-property-decorator';
-import { mapState, mapActions } from 'vuex';
 import Modal from '@/components/Modal.vue';
 import FormItem from '@/components/FormItem.vue';
 import Confirmation from '@/components/Confirmation.vue';
@@ -68,17 +67,10 @@ import listItem from '@/store/modules/listItem';
     Confirmation,
     Notifications,
   },
-  // computed: {
-  //   ...mapState(['listItem', 'meta']),
-  // },
-  // methods: {
-  //  ...mapActions(['getListItem', 'updateItem', 'deleteItemList']),
-  // },
 })
 export default class ListItem extends Vue {
-  listData = [];
   showModal = false;
-  choiceItem = {};
+  choiceItem = {} as Item;
   nameModal = '';
 
   controlShowModal(name: string, item: Item) {
@@ -98,29 +90,27 @@ export default class ListItem extends Vue {
   }
 
   editItem() {
-    // delete this.choiceItem.link;
-    this.$store.dispatch('updateItem', this.choiceItem);
+    listItem.updateItem(this.choiceItem);
     this.showModal = false;
   }
 
   deleteItem() {
-    this.$store.dispatch('deleteItemList', this.choiceItem);
+    listItem.deleteItemList(this.choiceItem);
     this.showModal = false;
   }
 
   get dataList() {
-    this.listData = this.$store.state.listItem.listItem;
-    return this.listData;
+    return listItem.listItem;
   }
 
   get getNotifications() {
-    return this.$store.state.listItem.meta;
+    return listItem.meta;
   }
 
   getFiles(value: any) {
     const filesImage = {file: value, url: URL.createObjectURL(value[0])};
-     this.choiceItem = {...this.choiceItem, link: filesImage.url, avatar: filesImage.file[0]};
-     return this.choiceItem
+    this.choiceItem = {...this.choiceItem, link: filesImage.url, avatar: filesImage.file[0]};
+    return this.choiceItem;
   }
 
   mounted() {
