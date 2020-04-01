@@ -18,7 +18,7 @@
     </div>
 
     <div class="group-btn">
-      <button @click="$emit('editItem')">Confirm</button>
+      <button @click.prevent="$emit('editItem')">Confirm</button>
       <button @click="$emit('modalClose')">Cancel</button>
     </div>
   </div>

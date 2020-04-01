@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Login from '../views/Login.vue';
 import About from '../views/About.vue';
 import Home from '../views/Home.vue';
+import DetailItem from '../views/DetailItem.vue';
 
 Vue.use(VueRouter);
 
@@ -26,6 +27,12 @@ const router = new VueRouter({
       path: '/about',
       name: 'About',
       component: About,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/detail/:id',
+      name: 'Detail',
+      component: DetailItem,
       meta: { requiresAuth: true },
     },
   ],

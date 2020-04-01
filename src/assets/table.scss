@@ -35,5 +35,9 @@ table {
         }
       }
     }
+    &:hover {
+      cursor: pointer;
+      background-color: aqua;
+    }
   }
 }

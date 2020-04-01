@@ -14,11 +14,21 @@
       />
 
       <Confirmation
-        v-if="nameModal === 'delete'"
+        v-else-if="nameModal === 'delete'"
         slot='content'
         @modalClose='controlHideModal()'
         @deleteItem='deleteItem()'
       />
+
+      <FormItem
+        v-else
+        slot='content'
+        :choiceParentItem='choiceItem'
+        @modalClose='controlHideModal()'
+        @editItem='addNewItem()'
+        @changeFile='getFiles'
+      />
+
     </Modal>
     <table>
       <tr>
@@ -28,7 +38,7 @@
         <th>Create at</th>
         <th>Update at</th>
       </tr>
-      <tr v-for="item in dataList" :key="item.id">
+      <tr v-for="item in dataList" :key="item.id" @click.prevent="showDetailItem(item.id)">
         <td>{{ item.id }}</td>
         <td>
           <img alt :src="item && item.link? item.link : item.avatar">
@@ -40,7 +50,7 @@
           {{ item.updated_at }}
           <img class="icon-group" alt src="@/assets/edit.svg" @click="controlShowModal('edit', item)"/>
           <img class="icon-group" alt src="@/assets/delete.svg" @click="controlShowModal('delete', item)"/>
-          <img class="icon-group" alt src="@/assets/add.svg" />
+          <img class="icon-group" alt src="@/assets/add.svg" @click="controlShowModal('add')"/>
         </td>
       </tr>
     </table>
@@ -58,7 +68,8 @@ import FormItem from '@/components/FormItem.vue';
 import Confirmation from '@/components/Confirmation.vue';
 import Notifications from '@/components/Notifications.vue';
 import { Item } from '@/store/models';
-import listItem from '@/store/modules/listItem';
+import listItems from '@/store/modules/listItem';
+
 
 @Component({
   components: {
@@ -78,33 +89,46 @@ export default class ListItem extends Vue {
       this.nameModal = name;
       this.choiceItem = {...item, link: item.avatar};
 
-    } else {
+    } else if (name === 'delete') {
       this.nameModal = name;
       this.choiceItem = {...item};
+    } else {
+      this.nameModal = name;
+      this.choiceItem = {} as Item;
     }
     this.showModal = true;
   }
 
    controlHideModal() {
+    this.choiceItem = {} as Item;
     this.showModal = false;
   }
 
   editItem() {
-    listItem.updateItem(this.choiceItem);
+    listItems.updateItem(this.choiceItem);
     this.showModal = false;
   }
 
   deleteItem() {
-    listItem.deleteItemList(this.choiceItem);
+    listItems.deleteItemList(this.choiceItem);
     this.showModal = false;
   }
 
+  addNewItem() {
+    listItems.addItem(this.choiceItem);
+    this.showModal = false;
+  }
+
+  async showDetailItem(item: Item) {
+    await this.$router.push(`/detail/${item}`);
+  }
+
   get dataList() {
-    return listItem.listItem;
+    return listItems.listItem;
   }
 
   get getNotifications() {
-    return listItem.meta;
+    return listItems.meta;
   }
 
   getFiles(value: any) {
@@ -114,7 +138,7 @@ export default class ListItem extends Vue {
   }
 
   mounted() {
-    listItem.getListItem();
+    listItems.getListItem();
   }
 }
 </script>

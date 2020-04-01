@@ -41,12 +41,47 @@
               color: white;
             }
           }
-        } 
+        }
       }
     }
     &__content{
+      position: relative;
       flex: 80%;
       padding: 10px;
+      &_card {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        &_form {
+          padding: 10px;
+          border: 1px solid grey;
+          border-radius: 9px;
+          display: flex;
+          background-color: #71afbf21;
+          transition: transform .5s ease;
+          &-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            img {
+              width: 210px;
+              height: 200px;
+              margin-right: 10px;
+              border-radius: 9px;
+            }
+            p {
+              font-weight: 600;
+              margin: 5px 0;
+              span {
+                font-weight: 500;
+              }
+            }
+          }
+          &:hover {
+            transform: scale(1.1);
+          }
+        }
+      }
     }
   }
 }

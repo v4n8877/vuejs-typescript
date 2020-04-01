@@ -1,18 +1,19 @@
 import {Action, getModule, Module, Mutation, VuexModule} from 'vuex-module-decorators';
 import {Item, ListItem} from '@/store/models';
-import {deleteItem, getListItem, updateItem} from '../api';
+import { deleteItem, getListItem, updateItem, addItem, getDetail } from '../api';
 import store from '@/store';
 
 @Module({
   namespaced: true,
-  name: 'listItem',
+  name: 'listItems',
   store,
   dynamic: true,
 })
 
 class ListItemModule extends VuexModule {
-  listItem: ListItem['data'] | null = null;
+  listItem: ListItem['data'] | null = [];
   meta: ListItem['meta'] | null = null;
+  detailItem: Item | null = null;
 
   @Action({commit: 'setListItem'})
   async getListItem() {
@@ -67,6 +68,32 @@ class ListItemModule extends VuexModule {
     const getData = data;
     const newList = this.listItem && this.listItem.filter((item: Item) => item.id !== getData.id);
     return this.listItem = newList;
+  }
+
+  @Action({ commit: 'addNewItem'})
+  async addItem(item: Item) {
+    const data = await addItem(item) ;
+    if (data?.meta?.status) {
+      return data.data;
+    }
+  }
+
+  @Mutation
+  addNewItem(data: Item) {
+    return this.listItem && this.listItem.push(data);
+  }
+
+  @Action({commit: 'infoItem'})
+  async getDetail(item: Item) {
+    const data = await getDetail(item);
+    if (data?.meta?.status) {
+      return data.data;
+    }
+  }
+
+  @Mutation
+  infoItem(data: Item) {
+    return this.detailItem = data;
   }
 }
 
