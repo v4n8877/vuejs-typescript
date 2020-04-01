@@ -9,7 +9,7 @@ table {
       padding: 8px;
     }
     &:nth-child(even) {
-      background-color: #dddddd;
+      background-color: #dddddd45;
     }
     td {
       img {
@@ -35,9 +35,8 @@ table {
         }
       }
     }
-    &:hover {
-      cursor: pointer;
-      background-color: aqua;
+    &:hover:not(:first-child) {
+      background-color: #00ffff42;
     }
   }
 }

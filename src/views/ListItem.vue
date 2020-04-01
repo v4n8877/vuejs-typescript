@@ -38,7 +38,7 @@
         <th>Create at</th>
         <th>Update at</th>
       </tr>
-      <tr v-for="item in dataList" :key="item.id" @click.prevent="showDetailItem(item.id)">
+      <tr v-for="item in dataList" :key="item.id">
         <td>{{ item.id }}</td>
         <td>
           <img alt :src="item && item.link? item.link : item.avatar">
@@ -48,9 +48,10 @@
         <td>{{ item.created_at }}</td>
         <td>
           {{ item.updated_at }}
-          <img class="icon-group" alt src="@/assets/edit.svg" @click="controlShowModal('edit', item)"/>
-          <img class="icon-group" alt src="@/assets/delete.svg" @click="controlShowModal('delete', item)"/>
-          <img class="icon-group" alt src="@/assets/add.svg" @click="controlShowModal('add')"/>
+          <img class="icon-group" alt src="@/assets/edit.svg" @click="controlShowModal('edit', item)" />
+          <img class="icon-group" alt src="@/assets/delete.svg" @click="controlShowModal('delete', item)" />
+          <img class="icon-group" alt src="@/assets/add.svg" @click="controlShowModal('add') "/>
+          <img class="icon-group" alt src="@/assets/detail.svg" @click.prevent="showDetailItem(item.id)" />
         </td>
       </tr>
     </table>
