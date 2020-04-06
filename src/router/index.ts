@@ -4,8 +4,11 @@ import Login from '../views/Login.vue';
 import About from '../views/About.vue';
 import Home from '../views/Home.vue';
 import DetailItem from '../views/DetailItem.vue';
+import Notifications from 'vue-notification';
 
 Vue.use(VueRouter);
+
+Vue.use(Notifications);
 
 
 const router = new VueRouter({

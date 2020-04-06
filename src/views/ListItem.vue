@@ -55,19 +55,15 @@
         </td>
       </tr>
     </table>
-    <Notifications
-      :meta='getNotifications'
-    />
   </div>
 </template>
 
 <script lang='ts'>
 // @ is an alias to /src
-import { Component, Vue } from 'vue-property-decorator';
+import {Component, Prop, Vue} from 'vue-property-decorator';
 import Modal from '@/components/Modal.vue';
 import FormItem from '@/components/FormItem.vue';
 import Confirmation from '@/components/Confirmation.vue';
-import Notifications from '@/components/Notifications.vue';
 import { Item } from '@/store/models';
 import listItems from '@/store/modules/listItem';
 
@@ -77,7 +73,6 @@ import listItems from '@/store/modules/listItem';
     Modal,
     FormItem,
     Confirmation,
-    Notifications,
   },
 })
 export default class ListItem extends Vue {
